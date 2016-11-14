@@ -1,0 +1,33 @@
+{
+  "name": "mhndev/rest-hal",
+  "description": "Rest Hal",
+  "keywords": ["hal", "rest"],
+  "homepage": "http://github.com/mhndev/rest-hal",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Majid Abdolhosseini",
+      "email": "majid8911303@gmail.com",
+      "homepage": "http://www.mhndev.com/"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "mhndev\\restHal\\": "src"
+    }
+  },
+  "require": {
+    "php": ">=5.5.0",
+    "nocarrier/hal": "^0.9.12"
+  },
+  "require-dev": {
+    "phpunit/phpunit": ">=4.8 < 6.0",
+    "raveren/kint": "^1.0"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\": "tests/"
+    }
+  }
+
+}
