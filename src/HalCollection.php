@@ -79,7 +79,7 @@ class HalCollection extends aHal implements iHalObjectCollection
      */
     function getCount()
     {
-        return $this->count;
+        return empty($this->count) ? $this->getTotal() : $this->count ;
     }
 
     /**
@@ -146,7 +146,7 @@ class HalCollection extends aHal implements iHalObjectCollection
         $self  = $this->getPage();
         $first = 1;
         $prev  = ($this->page == 1) ? null : $this->page - 1;
-        $last  = ($this->total / $this->count ) + 1;
+        $last  = floor($this->total / $this->count ) + 1;
         $next  = ($this->page == $last) ? null : $this->page + 1;
 
         $pageKey = self::PAGE;
