@@ -1,7 +1,8 @@
 <?php
 
 namespace mhndev\restHal;
-use mhndev\orderService\hal\interfaces\iHalObjectCollection;
+
+use mhndev\restHal\interfaces\iHalObjectCollection;
 use Nocarrier\Hal;
 
 /**
