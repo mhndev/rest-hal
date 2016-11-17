@@ -3,6 +3,8 @@ namespace mhndev\restHal;
 
 
 use mhndev\restHal\interfaces\iHalApiPresenter;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Class aHalApiPresenter

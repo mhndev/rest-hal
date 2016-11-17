@@ -1,6 +1,8 @@
 <?php
 
 namespace mhndev\restHal\interfaces;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Interface iHalApiPresenter
