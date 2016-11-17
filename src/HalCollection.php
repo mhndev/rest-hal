@@ -140,8 +140,7 @@ class HalCollection extends aHal implements iHalObjectCollection
      */
     public function getHal()
     {
-        $hal = new Hal();
-        $hal->setUri($this->getSelfUri());
+        $hal = new Hal($this->getSelfUri(), ['count' => (int)$this->getCount(), 'total' => (int)$this->getTotal()]);
 
         $self  = $this->getPage();
         $first = 1;
