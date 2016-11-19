@@ -1,6 +1,6 @@
 <?php
 
-namespace mhndev\restHal\hal;
+namespace mhndev\restHal\hal\exceptions;
 
 /**
  * Class InvalidArgumentException

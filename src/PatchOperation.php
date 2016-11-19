@@ -1,6 +1,7 @@
 <?php
 namespace mhndev\restHal;
-use mhndev\restHal\hal\InvalidArgumentException;
+
+use mhndev\restHal\hal\exceptions\InvalidArgumentException;
 use mhndev\restHal\interfaces\iPatchOperation;
 
 /**
@@ -58,16 +59,16 @@ class PatchOperation implements iPatchOperation
         switch($operation){
 
             case self::OPERATION_ADD:
-                $this->setNeededOptions(self::OPERATION_ADD, 'value', $operation['value']);
+                $this->setNeededOptions(self::OPERATION_ADD, 'value', $options);
                 break;
 
             case self::OPERATION_COPY:
-                $this->setNeededOptions(self::OPERATION_COPY, 'from', $operation['from']);
+                $this->setNeededOptions(self::OPERATION_COPY, 'from', $options);
                 break;
 
 
             case self::OPERATION_MOVE:
-                $this->setNeededOptions(self::OPERATION_REMOVE, 'from', $operation['from']);
+                $this->setNeededOptions(self::OPERATION_REMOVE, 'from', $options);
                 break;
 
 
@@ -78,7 +79,7 @@ class PatchOperation implements iPatchOperation
                 break;
 
             case self::OPERATION_REPLACE:
-                $this->setNeededOptions(self::OPERATION_REPLACE, 'value', $operation['value']);
+                $this->setNeededOptions(self::OPERATION_REPLACE, 'value', $options);
                 break;
 
             default:
@@ -88,14 +89,19 @@ class PatchOperation implements iPatchOperation
     }
 
 
-    private function setNeededOptions($operation, $requiredOption, $requiredOptionValue)
+    /**
+     * @param string $operation
+     * @param $requiredOption
+     * @param array $options
+     */
+    private function setNeededOptions($operation, $requiredOption, array $options)
     {
-        if(empty($operation['value'])){
+        if(empty($options[$requiredOption])){
             throw new InvalidArgumentException(
                 sprintf('while using %s , %s option is required.',$operation, $requiredOption)
             );
         }
-        $this->{$requiredOption} = $requiredOptionValue;
+        $this->{$requiredOption} = $options[$requiredOption];
     }
 
 
@@ -113,5 +119,13 @@ class PatchOperation implements iPatchOperation
     function getPath()
     {
         return $this->path;
+    }
+
+    /**
+     * @param $optionName
+     */
+    function getOption($optionName)
+    {
+        return $this->{$optionName};
     }
 }
