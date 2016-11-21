@@ -29,6 +29,10 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
     {
         $halType = $this->getHalType();
 
+        $queryParams = $request->getQueryParams();
+
+        unset($queryParams['page']);
+
         if($halType == self::HAL_TYPE_ERROR){
 
             $data = $this->getData();
@@ -47,7 +51,8 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
                 $request->getUri()->getPath(),
                 $this->getData()['data'],
                 $this->getData()['count'],
-                $this->getData()['total']
+                $this->getData()['total'],
+                $queryParams
             ))->getHal();
         }
 

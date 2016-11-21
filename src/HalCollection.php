@@ -49,20 +49,28 @@ class HalCollection extends aHal implements iHalObjectCollection
 
 
     /**
+     * @var array
+     */
+    protected $queryParams;
+
+
+    /**
      * HalCollection constructor.
      * @param $name
      * @param string $selfUri
      * @param array|\Traversable $embedded
      * @param null|integer $count
      * @param null|integer $total
+     * @param array $queryParams
      */
-    public function __construct($name, $selfUri, $embedded, $count = null, $total = null)
+    public function __construct($name, $selfUri, $embedded, $count = null, $total = null, array $queryParams)
     {
         $this->selfUri = $selfUri;
         $this->embedded = $embedded;
         $this->count = $count;
         $this->total = $total;
         $this->name  = $name;
+        $this->queryParams = $queryParams;
     }
 
 
@@ -150,11 +158,11 @@ class HalCollection extends aHal implements iHalObjectCollection
 
         $pageKey = self::PAGE;
 
-        $hal->addLink('first', $this->getSelfUri().'?'.$pageKey.'='.$first);
-        $hal->addLink('prev' , $this->getSelfUri().'?'.$pageKey.'='.$prev);
-        $hal->addLink('self' , $this->getSelfUri().'?'.$pageKey.'='.$self);
-        $hal->addLink('next' , $this->getSelfUri().'?'.$pageKey.'='.$next);
-        $hal->addLink('last' , $this->getSelfUri().'?'.$pageKey.'='.$last);
+        $hal->addLink('first', $this->buildUrl($pageKey, $first));
+        $hal->addLink('prev' , $this->buildUrl($pageKey, $prev));
+        $hal->addLink('self' , $this->buildUrl($pageKey, $self));
+        $hal->addLink('next' , $this->buildUrl($pageKey, $next));
+        $hal->addLink('last' , $this->buildUrl($pageKey, $last));
 
         foreach ($this->getEmbedded() as $record) {
             $item = new Hal(null, iterator_to_array($record) );
@@ -162,6 +170,18 @@ class HalCollection extends aHal implements iHalObjectCollection
         }
 
         return $hal;
+    }
+
+    /**
+     * @param $pageKey
+     * @param $position
+     * @return string
+     */
+    private function buildUrl($pageKey, $position)
+    {
+
+        $queryParamsString = empty($this->queryParams) ? '' :  '&'.http_build_query($this->queryParams);
+        return $this->getSelfUri().'?'.$pageKey.'='.$position.$queryParamsString;
     }
 
 
