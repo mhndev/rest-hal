@@ -27,11 +27,27 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
      */
     function makeResponse(ServerRequestInterface $request, ResponseInterface $response)
     {
+        if($this->getData()){
+            $body =  $this->makeResponseBody($request, $response);
+            $response->withBody($body);
+        }
+
+        return $response
+            ->withHeader('Content-type', 'application/json')
+            ->withStatus($this->statusCode);
+    }
+
+
+    /**
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
+     * @return \Psr\Http\Message\StreamInterface
+     */
+    private function makeResponseBody(ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $body = $response->getBody();
+
         $halType = $this->getHalType();
-
-        $queryParams = $request->getQueryParams();
-
-        unset($queryParams['page']);
 
         if($halType == self::HAL_TYPE_ERROR){
 
@@ -51,15 +67,10 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
                 $request->getUri()->getPath(),
                 $this->getData()['data'],
                 $this->getData()['count'],
-                $this->getData()['total'],
-                $queryParams
+                $this->getData()['total']
             ))->getHal();
         }
 
-
-
-
-        $body = $response->getBody();
 
         $accept = $request->getHeader('ACCEPT')[0];
 
@@ -73,17 +84,7 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
             $body->write($hal->asJson());
         }
 
-
-
-        $response->withBody($body);
-
-        return $response
-            ->withHeader('Content-type', 'application/json')
-            ->withStatus($this->statusCode);
-
-
-
-
+        return $body;
     }
 
     /**

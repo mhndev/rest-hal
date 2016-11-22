@@ -5,10 +5,6 @@ namespace mhndev\restHal;
 use mhndev\restHal\interfaces\iHalObjectError;
 use Nocarrier\Hal;
 
-/**
- * Class HalError
- * @package mhndev\restHal
- */
 class HalError extends aHal implements iHalObjectError
 {
 
