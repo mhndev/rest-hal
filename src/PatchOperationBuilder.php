@@ -35,6 +35,15 @@ class PatchOperationBuilder
 
     }
 
+    /**
+     * @param ServerRequestInterface $request
+     * @return \array[]
+     */
+    public static function operations(ServerRequestInterface $request)
+    {
+        return self::build($request);
+    }
+
 
     /**
      * @param ServerRequestInterface $request

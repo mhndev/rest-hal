@@ -93,11 +93,11 @@ class HalError extends aHal implements iHalObjectError
         }
 
         if($this->getCode()){
-            $error['path'] = $this->getCode();
+            $error['code'] = $this->getCode();
         }
 
         if($this->getLogRef()){
-            $error['path'] = $this->getLogRef();
+            $error['logRef'] = $this->getLogRef();
         }
 
         $hal = new Hal($this->getSelfUri(), $error);
