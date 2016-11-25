@@ -157,7 +157,15 @@ class HalCollection extends aHal implements iHalObjectCollection
         $hal->addLink('last' , $this->getSelfUri().'?'.$pageKey.'='.$last);
 
         foreach ($this->getEmbedded() as $record) {
-            $item = new Hal(null, iterator_to_array($record) );
+
+            if(is_array($record)){
+                $val = $record;
+            }elseif ($record instanceOf \Traversable){
+                $val = iterator_to_array($record);
+            }
+
+            $item = new Hal(null, $val);
+
             $hal->addResource($this->name, $item);
         }
 

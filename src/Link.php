@@ -1,7 +1,8 @@
 <?php
 
 namespace mhndev\restHal;
-use mhndev\restHal\hal\InvalidArgumentException;
+use mhndev\restHal\exceptions\InvalidArgumentException;
+use mhndev\restHal\interfaces\iLink;
 
 
 /**
