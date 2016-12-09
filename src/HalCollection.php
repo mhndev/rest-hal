@@ -142,11 +142,21 @@ class HalCollection extends aHal implements iHalObjectCollection
     {
         $hal = new Hal($this->getSelfUri(), ['count' => (int)$this->getCount(), 'total' => (int)$this->getTotal()]);
 
-        $self  = $this->getPage();
-        $first = 1;
-        $prev  = ($this->page == 1) ? null : $this->page - 1;
-        $last  = floor($this->total / $this->count ) + 1;
-        $next  = ($this->page == $last) ? null : $this->page + 1;
+        if($this->count == 0){
+            $first = 1;
+            $prev = null;
+            $next = null;
+            $last = 1;
+        }
+
+        else{
+            $self  = $this->getPage();
+            $first = 1;
+            $prev  = ($this->page == 1) ? null : $this->page - 1;
+            $last  = floor($this->total / $this->count ) + 1;
+            $next  = ($this->page == $last) ? null : $this->page + 1;
+
+        }
 
         $pageKey = self::PAGE;
 
