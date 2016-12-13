@@ -68,6 +68,7 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
                 $request->getUri()->getPath(),
                 $this->getData()['data'],
                 $this->getData()['count'],
+                $this->getData()['page'],
                 $this->getData()['total']
             ))->getHal();
         }

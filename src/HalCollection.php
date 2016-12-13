@@ -53,13 +53,15 @@ class HalCollection extends aHal implements iHalObjectCollection
      * @param $name
      * @param string $selfUri
      * @param array|\Traversable $embedded
+     * @param int $page
      * @param null|integer $count
      * @param null|integer $total
      */
-    public function __construct($name, $selfUri, $embedded, $count = null, $total = null)
+    public function __construct($name, $selfUri, $embedded, $page = 1, $count = null, $total = null)
     {
         $this->selfUri = $selfUri;
         $this->embedded = $embedded;
+        $this->page     = $page;
         $this->count = $count;
         $this->total = $total;
         $this->name  = $name;
