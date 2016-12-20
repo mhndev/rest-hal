@@ -149,6 +149,8 @@ class HalCollection extends aHal implements iHalObjectCollection
             $prev = null;
             $next = null;
             $last = 1;
+            $self= 1;
+
         }
 
         else{
