@@ -74,7 +74,11 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
         }
 
 
-        $accept = $request->getHeader('ACCEPT')[0];
+        if($request->hasHeader('ACCEPT')){
+            $accept = $request->getHeader('ACCEPT')[0];
+        }else{
+            $accept = 'application/json';
+        }
 
         if($accept == 'application/json'){
             $body->write($hal->asJson());
