@@ -30,6 +30,11 @@ class HalError extends aHal implements iHalObjectError
     protected $code;
 
     /**
+     * @var string
+     */
+    protected $details;
+
+    /**
      * HalError constructor.
      * @param $uri
      * @param string $message
@@ -44,6 +49,7 @@ class HalError extends aHal implements iHalObjectError
     {
         $this->selfUri = $uri;
         $this->message = $message;
+        $this->details = isset($options['details']) ? $options['details'] : null ;
         $this->path = isset($options['path']) ? $options['path'] : null ;
         $this->logRef = isset($options['logRef']) ? $options['logRef'] : null;
         $this->code = isset($options['code']) ? $options['code'] : null;
@@ -55,6 +61,14 @@ class HalError extends aHal implements iHalObjectError
     function getMessage()
     {
         return $this->message;
+    }
+
+    /**
+     * @return null|string
+     */
+    function getDetails()
+    {
+        return $this->details;
     }
 
     /**
@@ -98,6 +112,10 @@ class HalError extends aHal implements iHalObjectError
 
         if($this->getLogRef()){
             $error['logRef'] = $this->getLogRef();
+        }
+
+        if($this->getDetails()){
+            $error['details'] = $this->getDetails();
         }
 
         $hal = new Hal($this->getSelfUri(), $error);

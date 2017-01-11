@@ -55,7 +55,6 @@ class HalApiPresenter extends aHalApiPresenter implements iHalApiPresenter
             $message = $data['message'];
             unset($data['message']);
 
-
             $hal = (new HalError($request->getUri()->getPath(),$message, $data))->getHal();
 
         }elseif ($halType == self::HAL_TYPE_RESOURCE){
